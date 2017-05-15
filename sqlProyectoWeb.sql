@@ -21,20 +21,20 @@ USE `mydb` ;
 -- Table `mydb`.`usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`usuario` (
-  `id_usuario` INT NOT NULL COMMENT '',
+  `id_usuario` INT NOT NULL AUTO_INCREMENT ,
   `nombre` VARCHAR(45) NULL COMMENT '',
   `email` VARCHAR(45) NULL COMMENT '',
   `tipo` VARCHAR(45) NULL COMMENT '',
   `password` VARCHAR(45) NULL COMMENT '',
   PRIMARY KEY (`id_usuario`)  COMMENT '')
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1 ;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`datos_personales`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`datos_personales` (
-  `id_datospersonales` INT NOT NULL COMMENT '',
+  `id_datospersonales` INT NOT NULL AUTO_INCREMENT ,
   `nombre` VARCHAR(45) NULL COMMENT '',
   `apellido_paterno` VARCHAR(45) NULL COMMENT '',
   `apellido_materno` VARCHAR(45) NULL COMMENT '',
@@ -50,14 +50,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`datos_personales` (
     REFERENCES `mydb`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`datos_cliente`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`datos_cliente` (
-  `id_datoscliente` INT NOT NULL COMMENT '',
+  `id_datoscliente` INT NOT NULL AUTO_INCREMENT,
   `curp` VARCHAR(45) NULL COMMENT '',
   `rfc` VARCHAR(45) NULL COMMENT '',
   `sueldo` FLOAT NULL COMMENT '',
@@ -70,14 +70,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`datos_cliente` (
     REFERENCES `mydb`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`producto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`producto` (
-  `idproductos` INT NOT NULL COMMENT '',
+  `idproductos` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL COMMENT '',
   `descripcion` VARCHAR(150) NULL COMMENT '',
   `precio_venta` FLOAT NULL COMMENT '',
@@ -85,28 +85,28 @@ CREATE TABLE IF NOT EXISTS `mydb`.`producto` (
   `cantidad` INT NULL COMMENT '',
   `imagen` VARCHAR(45) NULL COMMENT '',
   PRIMARY KEY (`idproductos`)  COMMENT '')
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`flete`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`flete` (
-  `id_flete` INT NOT NULL COMMENT '',
+  `id_flete` INT NOT NULL AUTO_INCREMENT,
   `placa` VARCHAR(45) NULL COMMENT '',
   `marca` VARCHAR(45) NULL COMMENT '',
   `modelo` VARCHAR(45) NULL COMMENT '',
   `color` VARCHAR(45) NULL COMMENT '',
   `costo` FLOAT NULL COMMENT '',
   PRIMARY KEY (`id_flete`)  COMMENT '')
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`venta`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`venta` (
-  `idventa` INT NOT NULL COMMENT '',
+  `idventa` INT NOT NULL AUTO_INCREMENT,
   `idusuario` INT NOT NULL COMMENT '',
   `idflete` INT NOT NULL COMMENT '',
   `id_vendedor` INT NOT NULL COMMENT '',
@@ -139,14 +139,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`venta` (
     REFERENCES `mydb`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`detalle_venta`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`detalle_venta` (
-  `id_detalleventa` INT NOT NULL COMMENT '',
+  `id_detalleventa` INT NOT NULL AUTO_INCREMENT,
   `id_venta` INT NOT NULL COMMENT '',
   `id_producto` INT NOT NULL COMMENT '',
   `cantidad` INT NULL COMMENT '',
@@ -164,14 +164,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`detalle_venta` (
     REFERENCES `mydb`.`producto` (`idproductos`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`renta`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`renta` (
-  `idrenta` INT NOT NULL COMMENT '',
+  `idrenta` INT NOT NULL AUTO_INCREMENT,
   `id_flete` INT NOT NULL COMMENT '',
   `id_cliente` INT NOT NULL COMMENT '',
   `id_vendedor` INT NOT NULL COMMENT '',
@@ -205,14 +205,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`renta` (
     REFERENCES `mydb`.`flete` (`id_flete`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`detalle_renta`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`detalle_renta` (
-  `id_detallerenta` INT NOT NULL COMMENT '',
+  `id_detallerenta` INT NOT NULL AUTO_INCREMENT,
   `id_renta` INT NOT NULL COMMENT '',
   `id_producto` INT NOT NULL COMMENT '',
   `cantidad` INT NULL COMMENT '',
@@ -230,14 +230,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`detalle_renta` (
     REFERENCES `mydb`.`producto` (`idproductos`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`credito_cliente`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`credito_cliente` (
-  `idcredito_cliente` INT NOT NULL COMMENT '',
+  `idcredito_cliente` INT NOT NULL AUTO_INCREMENT,
   `id_cliente` INT NOT NULL COMMENT '',
   `sueldo` FLOAT NULL COMMENT '',
   `credito` FLOAT NULL COMMENT '',
@@ -248,14 +248,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`credito_cliente` (
     REFERENCES `mydb`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`deuda_cliente`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`deuda_cliente` (
-  `id_deudacliente` INT NOT NULL COMMENT '',
+  `id_deudacliente` INT NOT NULL AUTO_INCREMENT,
   `id_cliente` INT NOT NULL COMMENT '',
   `pago_quincenal` FLOAT NULL COMMENT '',
   `deuda_total` FLOAT NULL COMMENT '',
@@ -266,7 +266,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`deuda_cliente` (
     REFERENCES `mydb`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
