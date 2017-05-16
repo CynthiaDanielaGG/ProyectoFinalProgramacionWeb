@@ -113,7 +113,7 @@
               $dbpassword=$row['password'];
             }//termina while
             if($email==$dbuseremail AND $password==$dbpassword){
-              header('Location: ../paneladmin.php');
+              header('Location: ../administrador/perfil.php');
             }//termina el if de la validacion del admin
 
             $queryvendedor=mysqli_query($con,"SELECT * FROM usuario WHERE tipo='vendedor' AND email='".$email."' AND password='".$password."'");
