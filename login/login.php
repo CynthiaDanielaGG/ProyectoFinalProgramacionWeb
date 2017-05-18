@@ -123,8 +123,8 @@
                 $dbuseremailvendedor=$rowvendedor['email'];
                 $dbpasswordvendedor=$rowvendedor['password'];
               }//termina while
-              if($email==$dbuseremailvenddor AND $password==$dbpasswordvendor){
-                header('Location: ../panelvendedor.php');
+              if($email==$dbuseremailvendedor AND $password==$dbpasswordvendedor){
+                header('Location: ../vendedor/panel/index.html');
               }
           }else{
             echo"<script type='text/javascript'>";

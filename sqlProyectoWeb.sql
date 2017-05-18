@@ -8,19 +8,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema mobilario
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema mobilario
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `mobilario` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `mobilario` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`usuario`
+-- Table `mobilario`.`usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`usuario` (
+CREATE TABLE IF NOT EXISTS `mobilario`.`usuario` (
   `id_usuario` INT NOT NULL AUTO_INCREMENT ,
   `nombre` VARCHAR(45) NULL COMMENT '',
   `email` VARCHAR(45) NULL COMMENT '',
@@ -31,9 +31,9 @@ ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1 ;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`datos_personales`
+-- Table `mobilario`.`datos_personales`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`datos_personales` (
+CREATE TABLE IF NOT EXISTS `mobilario`.`datos_personales` (
   `id_datospersonales` INT NOT NULL AUTO_INCREMENT ,
   `nombre` VARCHAR(45) NULL COMMENT '',
   `apellido_paterno` VARCHAR(45) NULL COMMENT '',
@@ -47,16 +47,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`datos_personales` (
   INDEX `fk_usuario_datospersonale_idx` (`id_usuario` ASC)  COMMENT '',
   CONSTRAINT `fk_usuario_datospersonale`
     FOREIGN KEY (`id_usuario`)
-    REFERENCES `mydb`.`usuario` (`id_usuario`)
+    REFERENCES `mobilario`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`datos_cliente`
+-- Table `mobilario`.`datos_cliente`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`datos_cliente` (
+CREATE TABLE IF NOT EXISTS `mobilario`.`datos_cliente` (
   `id_datoscliente` INT NOT NULL AUTO_INCREMENT,
   `curp` VARCHAR(45) NULL COMMENT '',
   `rfc` VARCHAR(45) NULL COMMENT '',
@@ -67,16 +67,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`datos_cliente` (
   INDEX `fk_datoscliente_usuarios_idx` (`id_usuario` ASC)  COMMENT '',
   CONSTRAINT `fk_datoscliente_usuarios`
     FOREIGN KEY (`id_usuario`)
-    REFERENCES `mydb`.`usuario` (`id_usuario`)
+    REFERENCES `mobilario`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`producto`
+-- Table `mobilario`.`producto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`producto` (
+CREATE TABLE IF NOT EXISTS `mobilario`.`producto` (
   `idproductos` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL COMMENT '',
   `descripcion` VARCHAR(150) NULL COMMENT '',
@@ -89,9 +89,9 @@ ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`flete`
+-- Table `mobilario`.`flete`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`flete` (
+CREATE TABLE IF NOT EXISTS `mobilario`.`flete` (
   `id_flete` INT NOT NULL AUTO_INCREMENT,
   `placa` VARCHAR(45) NULL COMMENT '',
   `marca` VARCHAR(45) NULL COMMENT '',
@@ -103,9 +103,9 @@ ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`venta`
+-- Table `mobilario`.`venta`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`venta` (
+CREATE TABLE IF NOT EXISTS `mobilario`.`venta` (
   `idventa` INT NOT NULL AUTO_INCREMENT,
   `idusuario` INT NOT NULL COMMENT '',
   `idflete` INT NOT NULL COMMENT '',
@@ -121,31 +121,31 @@ CREATE TABLE IF NOT EXISTS `mydb`.`venta` (
   INDEX `fk_venta_chofer_idx` (`id_chofer` ASC)  COMMENT '',
   CONSTRAINT `fk_venta_flete`
     FOREIGN KEY (`idflete`)
-    REFERENCES `mydb`.`flete` (`id_flete`)
+    REFERENCES `mobilario`.`flete` (`id_flete`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_venta_cliente`
     FOREIGN KEY (`idusuario`)
-    REFERENCES `mydb`.`usuario` (`id_usuario`)
+    REFERENCES `mobilario`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_venta_vendedor`
     FOREIGN KEY (`id_vendedor`)
-    REFERENCES `mydb`.`usuario` (`id_usuario`)
+    REFERENCES `mobilario`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_venta_chofer`
     FOREIGN KEY (`id_chofer`)
-    REFERENCES `mydb`.`usuario` (`id_usuario`)
+    REFERENCES `mobilario`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`detalle_venta`
+-- Table `mobilario`.`detalle_venta`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`detalle_venta` (
+CREATE TABLE IF NOT EXISTS `mobilario`.`detalle_venta` (
   `id_detalleventa` INT NOT NULL AUTO_INCREMENT,
   `id_venta` INT NOT NULL COMMENT '',
   `id_producto` INT NOT NULL COMMENT '',
@@ -156,21 +156,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`detalle_venta` (
   INDEX `fk_detalleventa_producto_idx` (`id_producto` ASC)  COMMENT '',
   CONSTRAINT `fk_detalleventa_venta`
     FOREIGN KEY (`id_venta`)
-    REFERENCES `mydb`.`venta` (`idventa`)
+    REFERENCES `mobilario`.`venta` (`idventa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_detalleventa_producto`
     FOREIGN KEY (`id_producto`)
-    REFERENCES `mydb`.`producto` (`idproductos`)
+    REFERENCES `mobilario`.`producto` (`idproductos`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`renta`
+-- Table `mobilario`.`renta`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`renta` (
+CREATE TABLE IF NOT EXISTS `mobilario`.`renta` (
   `idrenta` INT NOT NULL AUTO_INCREMENT,
   `id_flete` INT NOT NULL COMMENT '',
   `id_cliente` INT NOT NULL COMMENT '',
@@ -187,31 +187,31 @@ CREATE TABLE IF NOT EXISTS `mydb`.`renta` (
   INDEX `fk_renta_flete_idx` (`id_flete` ASC)  COMMENT '',
   CONSTRAINT `fk_renta_cliente`
     FOREIGN KEY (`id_cliente`)
-    REFERENCES `mydb`.`usuario` (`id_usuario`)
+    REFERENCES `mobilario`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_renta_vendedor`
     FOREIGN KEY (`id_vendedor`)
-    REFERENCES `mydb`.`usuario` (`id_usuario`)
+    REFERENCES `mobilario`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_renta_chofer`
     FOREIGN KEY (`id_chofer`)
-    REFERENCES `mydb`.`usuario` (`id_usuario`)
+    REFERENCES `mobilario`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_renta_flete`
     FOREIGN KEY (`id_flete`)
-    REFERENCES `mydb`.`flete` (`id_flete`)
+    REFERENCES `mobilario`.`flete` (`id_flete`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`detalle_renta`
+-- Table `mobilario`.`detalle_renta`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`detalle_renta` (
+CREATE TABLE IF NOT EXISTS `mobilario`.`detalle_renta` (
   `id_detallerenta` INT NOT NULL AUTO_INCREMENT,
   `id_renta` INT NOT NULL COMMENT '',
   `id_producto` INT NOT NULL COMMENT '',
@@ -222,21 +222,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`detalle_renta` (
   INDEX `fk_detallerenta_producto_idx` (`id_producto` ASC)  COMMENT '',
   CONSTRAINT `fk_detallerenta_venta`
     FOREIGN KEY (`id_renta`)
-    REFERENCES `mydb`.`renta` (`idrenta`)
+    REFERENCES `mobilario`.`renta` (`idrenta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_detallerenta_producto`
     FOREIGN KEY (`id_producto`)
-    REFERENCES `mydb`.`producto` (`idproductos`)
+    REFERENCES `mobilario`.`producto` (`idproductos`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`credito_cliente`
+-- Table `mobilario`.`credito_cliente`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`credito_cliente` (
+CREATE TABLE IF NOT EXISTS `mobilario`.`credito_cliente` (
   `idcredito_cliente` INT NOT NULL AUTO_INCREMENT,
   `id_cliente` INT NOT NULL COMMENT '',
   `sueldo` FLOAT NULL COMMENT '',
@@ -245,16 +245,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`credito_cliente` (
   INDEX `fk_creditocliente_cliente_idx` (`id_cliente` ASC)  COMMENT '',
   CONSTRAINT `fk_creditocliente_cliente`
     FOREIGN KEY (`id_cliente`)
-    REFERENCES `mydb`.`usuario` (`id_usuario`)
+    REFERENCES `mobilario`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`deuda_cliente`
+-- Table `mobilario`.`deuda_cliente`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`deuda_cliente` (
+CREATE TABLE IF NOT EXISTS `mobilario`.`deuda_cliente` (
   `id_deudacliente` INT NOT NULL AUTO_INCREMENT,
   `id_cliente` INT NOT NULL COMMENT '',
   `pago_quincenal` FLOAT NULL COMMENT '',
@@ -263,7 +263,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`deuda_cliente` (
   INDEX `fk_deuda_cliente_idx` (`id_cliente` ASC)  COMMENT '',
   CONSTRAINT `fk_deuda_cliente`
     FOREIGN KEY (`id_cliente`)
-    REFERENCES `mydb`.`usuario` (`id_usuario`)
+    REFERENCES `mobilario`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB DEFAULT CHARSET = latin1 AUTO_INCREMENT = 1;
