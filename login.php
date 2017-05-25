@@ -1,3 +1,20 @@
+<?php
+session_start();
+ ?>
+ <!-- Se hace referencia que utilizara las variables del archivo conexion.php-->
+<?php require_once("includes/conexion.php"); ?>
+
+<?php
+//Aqui se pregunta si la sesion del usuario ya esta iniciada
+if(isset($_SESSION["session_username"])){
+// en caso de cerrarse la sesion se manda a la pagina principal
+	header("Location: vendedor/panel/login.php");
+}
+if(isset($_SESSION["session_admin"])){
+// en caso de cerrarse la sesion se manda a la pagina principal
+	header("Location: administrar.php");
+}
+ ?>
 <html>
 <head>
   <meta charset="utf-8">
@@ -6,17 +23,17 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- iCheck -->
-  <link rel="stylesheet" href="../plugins/iCheck/square/blue.css">
-  <link rel="stylesheet" type="text/css" href="../css/sweetalert.css">
-  <script src="../css/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
+  <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+  <script src="css/sweetalert.min.js"></script>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,7 +43,7 @@
   <![endif]-->
 </head>
 <body class="hold-transition login-page">
-<div class="login-box">
+  <div class="login-box">
   <div class="login-logo">
     <a href="#"><b>Renta y Venta de mobiliario</b>Tec</a>
   </div>
@@ -36,11 +53,11 @@
 
     <form id='formlogin' nam='formlogin' method="post">
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" name="email" id="email" placeholder="correo electronico">
+        <input type="email" class="form-control" name="email" id="email" placeholder="correo electronico" required>
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
@@ -53,7 +70,7 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat" id = "btnentrar" name = "btnentrar">Entrar</button>
+          <button type="submit" class="btn btn-primary btn-block btn-flat" id ="btnentrar" name = "btnentrar">Entrar</button>
         </div>
         <!-- /.col -->
       </div>
@@ -93,47 +110,25 @@
 </body>
 </html>
 <?php
-    require_once('../conexionBD/conexion.php');
+if(isset($_POST["btnentrar"]))
+{
+  $email = $_POST['email'];
+  $password = $_POST['password'];
 
-    if(isset($_POST['btnentrar'])){
-      if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        if($email =="" || $password ==""){
-          echo"<script type='text/javascript'>";
-          echo "swal('Opps..!','No debe de haber campos vacios','error')";
-          echo "</script>";
-        }//termina if de validar campos vacios
-        else{
-          $query=mysqli_query($con,"SELECT * FROM usuario WHERE tipo='administrador'");
-          $numrows=mysqli_num_rows($query);
-          if($numrows!=0){
-            while($row=mysqli_fetch_assoc($query)){
-              $dbuseremail=$row['email'];
-              $dbpassword=$row['password'];
-            }//termina while
-            if($email==$dbuseremail AND $password==$dbpassword){
-              header('Location: ../administrador/perfil.php');
-            }//termina el if de la validacion del admin
-
-            $queryvendedor=mysqli_query($con,"SELECT * FROM usuario WHERE tipo='vendedor' AND email='".$email."' AND password='".$password."'");
-            $numrowsvendedor=mysqli_num_rows($queryvendedor);
-            if($numrowsvendedor!=0){
-              while($rowvendedor=mysqli_fetch_assoc($queryvendedor)){
-                $dbuseremailvendedor=$rowvendedor['email'];
-                $dbpasswordvendedor=$rowvendedor['password'];
-              }//termina while
-              if($email==$dbuseremailvendedor AND $password==$dbpasswordvendedor){
-                header('Location: ../vendedor/panel/index.html');
-              }
-          }else{
-            echo"<script type='text/javascript'>";
-            echo "swal('Opps..!','No existe registro de ese usuario','error')";
-            echo "</script>";
-          }
-
-        }
+  if ($email == "admin@gmail.com" && $password == "123456") {
+    # code...
+    #Pagina del administrador
+ 		$_SESSION['session_admin']=$email;
+ 		//Aqui va el link a la pagina del administrador
+ 		header("Location: administrar.php");
+  }else {
+    # code...
+    //primero comprobamos si se trata de un vendedor
+ 			$query = mysql_query("SELECT * FROM usuario WHERE email='".$email."' AND password='".$password."'");
+      $numrows=mysql_num_rows($query);
+      if ($numrows!=0) {
+        # code...
       }
-    }
   }
+}
  ?>
