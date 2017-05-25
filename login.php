@@ -6,9 +6,9 @@ session_start();
 
 <?php
 //Aqui se pregunta si la sesion del usuario ya esta iniciada
-if(isset($_SESSION["session_username"])){
+if(isset($_SESSION["session_vendedor"])){
 // en caso de cerrarse la sesion se manda a la pagina principal
-	header("Location: vendedor/panel/login.php");
+	header("Location: vendedor/panel/index.php");
 }
 if(isset($_SESSION["session_admin"])){
 // en caso de cerrarse la sesion se manda a la pagina principal
@@ -127,7 +127,16 @@ if(isset($_POST["btnentrar"]))
  			$query = mysql_query("SELECT * FROM usuario WHERE email='".$email."' AND password='".$password."'");
       $numrows=mysql_num_rows($query);
       if ($numrows!=0) {
-        # code...
+        $row=mysql_fetch_assoc($query);
+        if ($email == $row['email'] && $password == $row['password']) {
+          $_SESSION["session_vendedor"] = $row['nombre'];
+          header("Location: vendedor/panel/index.php");
+        }else {
+          $mensaje = "Usuario no registrado en el sistema!";
+        }
+
+      }else {
+        $mensaje = "Usuario no registrado en el sistema!";
       }
   }
 }
