@@ -93,11 +93,11 @@ if(isset($_SESSION["session_admin"])){
 <!-- /.login-box -->
 
 <!-- jQuery 2.2.3 -->
-<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <!-- iCheck -->
-<script src="../plugins/iCheck/icheck.min.js"></script>
+<script src="plugins/iCheck/icheck.min.js"></script>
 <script>
   $(function () {
     $('input').iCheck({
@@ -124,19 +124,25 @@ if(isset($_POST["btnentrar"]))
   }else {
     # code...
     //primero comprobamos si se trata de un vendedor
- 			$query = mysql_query("SELECT * FROM usuario WHERE email='".$email."' AND password='".$password."'");
+ 			$query = mysql_query("SELECT * FROM usuario WHERE email='".$email."'");
       $numrows=mysql_num_rows($query);
       if ($numrows!=0) {
         $row=mysql_fetch_assoc($query);
-        if ($email == $row['email'] && $password == $row['password']) {
+        if ($password == $row['password']) {
           $_SESSION["session_vendedor"] = $row['nombre'];
           header("Location: vendedor/panel/index.php");
         }else {
-          $mensaje = "Usuario no registrado en el sistema!";
+          $mensaje = "Contraseña incorrecta!";
+          echo "<script type='text/javascript'>";
+          echo "swal('Oops..!','".$mensaje."','error')";
+          echo "</script>";
         }
 
       }else {
         $mensaje = "Usuario no registrado en el sistema!";
+        echo "<script type='text/javascript'>";
+        echo "swal('Oops..!','".$mensaje."','error')";
+        echo "</script>";
       }
   }
 }
