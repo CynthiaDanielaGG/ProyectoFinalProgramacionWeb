@@ -214,19 +214,9 @@
           <a href="#"><i class="fa fa-circle text-success"></i> En linia</a>
         </div>
       </div>
-      <!-- search form -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>
       <ul class="sidebar-menu">
         <li id="inicio">
-          <a href="index.html"><i class='fa fa-home'></i>
+          <a href="../../vendedor/panel/index.php"><i class='fa fa-home'></i>
             <span>
               Inicio
             </span>
