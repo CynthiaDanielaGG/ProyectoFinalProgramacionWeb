@@ -71,8 +71,36 @@
                   </div>
                 </div>
               </div>
+              <div class="bloque-inputs col-xs-12">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                  <div class="form-group">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                      <label class="control-label" style="font-weight:bold">Productos</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                      <select class="form-control" name="select_productos" id="combo_productos">
+                        <option value="">Seleccione un producto..</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                  <div class="form-group">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                      <label class="control-label" style="font-weight:bold">Cantidad</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                      <div class="input-group">
+                        <input type="number" class="form-control" name="cantidad" value="" min="1">
+                        <span class="input-group-addon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+          <br>
         </div>
       </div>
     </section>
