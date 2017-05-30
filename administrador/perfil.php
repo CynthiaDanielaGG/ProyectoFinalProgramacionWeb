@@ -209,8 +209,9 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="../Trabajador/agregar.php"><i class="fa fa-circle-o"></i> Agregar</a></li>
-            <li><a href="../index2.html"><i class="fa fa-circle-o"></i> Modificar</a></li>
-            <li><a href="../index2.html"><i class="fa fa-circle-o"></i> Eliminar</a></li>
+            <!--Se modifico el acceso a la vista para modificar-->
+            <li><a href="../Trabajador/modificar.php"><i class="fa fa-circle-o"></i> Modificar</a></li>
+            <li><a href=""><i class="fa fa-circle-o"></i> Eliminar</a></li>
           </ul>
         </li>
         <li class="treeview">

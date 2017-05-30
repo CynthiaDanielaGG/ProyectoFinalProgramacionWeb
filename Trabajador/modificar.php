@@ -266,31 +266,38 @@
                     placeholder="Buscar el trabajador que deseas modificar..." required=""/>
                   </div>
                   <br>
-                  <div class="row" style="display: none" id="div_trabajador">
-                    <div class="col-md-12 col-sm-12 col-md-12 col-xs-12">
-                      <div class="bloque-inputs col-xs-12">
-                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                          <div class="form-group">
-                            <div class="col-sx-12 col-sm-12 col-md-12">
-                              <label class="control-label" style="font-weigth:bold">Nombre del trabajador</label>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                              <input type="text" id="nombre_trabajador" name="nombre_trabajador" >
-                            </div>
-                          </div>
+                </div>
+              </form>
+              <!--Se modifico el formulario ya que adentro de el estaba el div de los datos del trabajador a visualizar
+              ya que se estaban enviando mediante el form-->
+
+              <div class="row" style="display: none" id="div_trabajador">
+                <div class="col-md-12 col-sm-12 col-md-12 col-xs-12">
+                  <div class="bloque-inputs col-xs-12">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <div class="col-sx-12 col-sm-12 col-md-12">
+                          <label class="control-label" style="font-weigth:bold">Nombre del trabajador</label>
                         </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                          <div class="form-group">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                              <input type="text" id="email_trabajador" name="email_trabajador" >
-                            </div>
-                          </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                          <input type="text" id="nombre_trabajador" name="nombre_trabajador" >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <!--Agregando este div para mostrar texto de email del trbajador y con esto se alinean los campos-->
+                        <div class="col-sx-12 col-sm-12 col-md-12">
+                          <label class="control-label" style="font-weigth:bold">Email del trabajador</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                          <input type="text" id="email_trabajador" name="email_trabajador" >
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </form>
+              </div>
          </div>
   </div>
 
@@ -321,8 +328,8 @@
     },
     success:function(data)
     {
-      $("#nombre_trabajador").html(data.nombre);
-      $("#email_trabajador").html(data.correo);
+      $("#nombre_trabajador").val(data.nombre);
+      $("#email_trabajador").val(data.correo);
       document.getElementById("div_trabajador").style.display="block";
     },
     error:function()
