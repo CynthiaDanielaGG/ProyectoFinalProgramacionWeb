@@ -141,7 +141,7 @@
                     <label class="control-label" style="font-weight:bold">Cantidad</label>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12">
-                    <input type="number" name="cantidad" value="" class="form-control" required="" min="1">
+                    <input type="number" name="cantidad" id="cantidad_producto" value="1" class="form-control" required="" min="1">
                   </div>
 
                 </div>
@@ -165,21 +165,36 @@
                       <h3 class="box-title">Detalle de venta</h3>
                     </div>
                   </div>
-                  <div class="box-body" style="display: block;">
-                    <table class="table no-margin">
-                      <thead>
-                        <tr>
-                          <td>Codigo</td>
-                          <td>Nombre</td>
-                          <td>Precio</td>
-                          <td>Subtotal</td>
-                        </tr>
-                      </thead>
-                      <tbody>
+                  <form class="" action="" method="post">
+                    <input type="hidden" id="usuario_id" name="cliente_id">
+                    <div class="box-body" style="display: block;">
+                      <table class="table no-margin" id="detalles">
+                        <thead style="background-color:#A9D0F5">
+                          <th>Opciones</th>
+                          <th>Nombre</th>
+                          <th>Cantidad</th>
+                          <th>Precio</th>
+                          <th>Subtotal</th>
+                        </thead>
+                        <tbody>
 
-                      </tbody>
-                    </table>
-                  </div>
+                        </tbody>
+                        <tfoot>
+                          <th>TOTAL</th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th><h4 id="total">$ 0.00</h4></th>
+                        </tfoot>
+                      </table>
+                    </div>
+                    <div class="box-footer clearfix">
+                      <button type="submit" class="btn btn-success pull-right">
+                        <i class="fa fa-credit-card"></i> Vender
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -228,6 +243,7 @@
       },
       success: function(data)
       {
+        $("#usuario_id").val(data.id);
         $("#nombre_cliente").html(data.nombre);
         $("#email_cliente").html(data.correo);
         document.getElementById("div_cliente").style.display = "block";
@@ -274,6 +290,62 @@
       }
     })
   });
+
+
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+  $('#btn_add').click(function()
+  {
+    agregar();
+  });
+});
+var cont = 0;
+var total = 0;
+var subtotal = [];
+$("#guardar").hide();
+function agregar() {
+  idarticulo = $("#id_producto").html();
+  articulo = $("#nombre_producto").html();
+  cantidad = $("#cantidad_producto").val();
+  precio_venta = $("#precio_venta_producto").html();
+
+  if (idarticulo != "" && cantidad != "" && cantidad > 0 && precio_venta != "") {
+    subtotal[cont] = (cantidad * precio_venta);
+    total = total + subtotal[cont];
+    var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name"cantidad[]" value="'+cantidad+'"></td> <td><label>'+precio_venta+'</label></td><td>'+subtotal[cont]+'</td></tr>';
+    cont ++;
+    limpiar();
+    $("#total").html("$ "+total);
+    evaluar();
+    $("#detalles").append(fila);
+  }else {
+    alert("Error al ingresar el detalle de la venta de los datos del producto");
+  }
+
+}
+function limpiar()
+{
+  $("#cantidad_producto").val("0");
+  $("#id_producto").html("");
+  $("#nombre_producto").html("");
+  $("#descripcion_producto").html("");
+  $("#precio_venta_producto").html("");
+}
+
+function evaluar() {
+  if (total > 0) {
+    $("#guardar").show();
+  }else {
+    $("#guardar").hide();
+  }
+}
+function eliminar(index) {
+  total = total - subtotal[index];
+  $("#total").html("$ "+total);
+  $("#fila" + index).remove();
+  evaluar();
+}
 </script>
 </body>
 </html>
