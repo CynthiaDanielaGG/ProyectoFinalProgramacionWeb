@@ -12,7 +12,7 @@ if(isset($_SESSION["session_vendedor"])){
 }
 if(isset($_SESSION["session_admin"])){
 // en caso de cerrarse la sesion se manda a la pagina principal
-	header("Location: administrar.php");
+	header("Location: administrador/panel/perfil.php");
 }
  ?>
 <html>
@@ -120,7 +120,7 @@ if(isset($_POST["btnentrar"]))
     #Pagina del administrador
  		$_SESSION['session_admin']=$email;
  		//Aqui va el link a la pagina del administrador
- 		header("Location: administrar.php");
+ 		header("Location: administrador/perfil.php");
   }else {
     # code...
     //primero comprobamos si se trata de un vendedor
