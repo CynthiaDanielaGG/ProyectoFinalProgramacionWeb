@@ -120,7 +120,7 @@ if(isset($_POST["btnentrar"]))
     #Pagina del administrador
  		$_SESSION['session_admin']=$email;
  		//Aqui va el link a la pagina del administrador
- 		header("Location: administrador/perfil.php");
+ 		header("Location: administrador/panel/perfil.php");
   }else {
     # code...
     //primero comprobamos si se trata de un vendedor
