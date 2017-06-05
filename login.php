@@ -130,6 +130,7 @@ if(isset($_POST["btnentrar"]))
         $row=mysql_fetch_assoc($query);
         if ($password == $row['password']) {
           $_SESSION["session_vendedor"] = $row['nombre'];
+          $_SESSION["vendedor_id"] = $row['id_usuario'];
           header("Location: vendedor/panel/index.php");
         }else {
           $mensaje = "Contraseña incorrecta!";

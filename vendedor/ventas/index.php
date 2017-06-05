@@ -133,6 +133,7 @@
               </div>
             </div>
           </div>
+          <form class="" action="" method="post" id="formulario_venta">
           <div class="row">
             <div class="bloque-inputs col-xs-12">
               <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
@@ -143,7 +144,43 @@
                   <div class="col-xs-12 col-sm-12 col-md-12">
                     <input type="number" name="cantidad" id="cantidad_producto" value="1" class="form-control" required="" min="1">
                   </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                <div class="form-group">
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                    <label class="control-label" style="font-weight:bold">Selecciona un flete:</label>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                    <select class="form-control" name="flete" id="combo_flete" placeholder="Seleccione un parentesco">
 
+								    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                <div class="form-group">
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                    <label class="control-label" style="font-weight:bold">Selecciona un chofer:</label>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                    <select class="form-control" name="chofer" id="combo_chofer" placeholder="Seleccione un parentesco">
+
+								     </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bloque-inputs col-xs-12">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                    <label class="control-label" style="font-weight:bold">Escribe el domicilio donde sera entregado el producto.</label>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                    <textarea name="texto_domicilio" class="form-control" rows="5" cols="30" placeholder="Escribe la dirección" required=""></textarea>
+                  </div>
                 </div>
               </div>
             </div>
@@ -153,6 +190,7 @@
                   <div class="col-xs-12 col-sm-12 col-md-12">
                     <br>
                     <button type="button" id="btn_add" class="btn btn-success form-control"> Agregar <i class="fa fa-angle-double-right fa-lg"></i></button>
+                    <br>
                   </div>
                 </div>
               </div>
@@ -165,7 +203,7 @@
                       <h3 class="box-title">Detalle de venta</h3>
                     </div>
                   </div>
-                  <form class="" action="" method="post">
+                  <input type="hidden" name="vendedor_id" value='<?php echo $_SESSION["vendedor_id"]; ?>'>
                     <input type="hidden" id="usuario_id" name="cliente_id">
                     <div class="box-body" style="display: block;">
                       <table class="table no-margin" id="detalles">
@@ -184,21 +222,21 @@
                           <th></th>
                           <th></th>
                           <th></th>
-                          <th></th>
                           <th><h4 id="total">$ 0.00</h4></th>
                         </tfoot>
                       </table>
                     </div>
+                    <input type="hidden" id="total_venta" name="venta_total" value="">
                     <div class="box-footer clearfix">
                       <button type="submit" class="btn btn-success pull-right">
                         <i class="fa fa-credit-card"></i> Vender
                       </button>
                     </div>
-                  </form>
                 </div>
               </div>
             </div>
           </div>
+          </form>
         </div>
       </div>
     </section>
@@ -291,6 +329,61 @@
     })
   });
 
+  $("#formulario_venta").submit(function(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    $.ajax({
+      url: 'crear_venta.php',
+      type: 'POST',
+      data: $(this).serialize(),
+      dataType: 'json',
+
+      beforeSend: function() {
+        swal({
+        title: "Enviando...",
+        text: "Se esta procesando la venta...<br> <i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i>",
+        html: true,
+        showConfirmButton: false,
+        showLoaderOnConfirm: true
+      });
+      },
+      success: function(data)
+      {
+        if (data.mensaje == 'OK') {
+          $("#cantidad_producto").val("1");
+          $("#id_producto").html("");
+          $("#nombre_producto").html("");
+          $("#descripcion_producto").html("");
+          $("#precio_venta_producto").html("");
+          $("#total").html("$ 0.00");
+          $("#total_venta").val("0");
+          swal({
+            title: "Muy bien!",
+            text: "Venta realizada!",
+            type: "success",
+            showCancelButton: false,
+            confirmButtonColor: "#7ADD55",
+            confirmButtonText: "Cerrar",
+            closeOnConfirm: false
+          },
+          function(){
+            window.location.reload();
+          });
+          //swal("Muy Bien!", "Venta realizada!", "success");
+        }
+      },
+      error: function()
+      {
+
+      },
+      complete: function()
+      {
+
+      }
+    })
+  });
+
 
 </script>
 <script type="text/javascript">
@@ -307,16 +400,17 @@ $("#guardar").hide();
 function agregar() {
   idarticulo = $("#id_producto").html();
   articulo = $("#nombre_producto").html();
-  cantidad = $("#cantidad_producto").val();
+  cantidad_art = $("#cantidad_producto").val();
   precio_venta = $("#precio_venta_producto").html();
 
-  if (idarticulo != "" && cantidad != "" && cantidad > 0 && precio_venta != "") {
-    subtotal[cont] = (cantidad * precio_venta);
+  if (idarticulo != "" && cantidad_art != "" && cantidad_art > 0 && precio_venta != "") {
+    subtotal[cont] = (cantidad_art * precio_venta);
     total = total + subtotal[cont];
-    var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name"cantidad[]" value="'+cantidad+'"></td> <td><label>'+precio_venta+'</label></td><td>'+subtotal[cont]+'</td></tr>';
+    var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="hidden" name="cantidad_articulo[]" value="'+cantidad_art+'"><label>'+cantidad_art+'</label></td> <td><label>'+precio_venta+'</label></td><td><input type="hidden" name="subtotal_articulo[]" value="'+subtotal[cont]+'">'+subtotal[cont]+'</td></tr>';
     cont ++;
     limpiar();
     $("#total").html("$ "+total);
+    $("#total_venta").val(total);
     evaluar();
     $("#detalles").append(fila);
   }else {
@@ -326,7 +420,7 @@ function agregar() {
 }
 function limpiar()
 {
-  $("#cantidad_producto").val("0");
+  $("#cantidad_producto").val("1");
   $("#id_producto").html("");
   $("#nombre_producto").html("");
   $("#descripcion_producto").html("");
@@ -343,9 +437,40 @@ function evaluar() {
 function eliminar(index) {
   total = total - subtotal[index];
   $("#total").html("$ "+total);
+  $("#total_venta").val(total);
   $("#fila" + index).remove();
   evaluar();
 }
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.ajax({
+			url: "getFletes.php",
+			type:"GET",
+			success: function(result){
+				$('#combo_flete').empty();
+        $('#combo_flete').append("<option value=''>Seleccione un flete</option>");
+				$.each(result, function (index, value){
+				  $('#combo_flete').append("<option value='" + value.id + "'>" + value.modelo + "</option>");
+				});
+			}
+		});
+	});
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.ajax({
+			url: "getChofer.php",
+			type:"GET",
+			success: function(result){
+				$('#combo_chofer').empty();
+        $('#combo_chofer').append("<option value=''>Seleccione un chofer</option>");
+				$.each(result, function (index, value){
+				  $('#combo_chofer').append("<option value='" + value.id + "'>" + value.nombre + "</option>");
+				});
+			}
+		});
+	});
 </script>
 </body>
 </html>
